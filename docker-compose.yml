@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    working_dir: /app/book-review
+    ports:
+      - "8000:8000"
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kursdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+      PMA_ARBITRARY: 1
+volumes:
+    db_data:
