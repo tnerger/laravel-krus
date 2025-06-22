@@ -3,6 +3,8 @@ services:
     build: .
     volumes:
       - .:/app
+      - /app/storage
+      - /app/bootstrap/cache
     working_dir: /app/book-review
     ports:
       - "8000:8000"
