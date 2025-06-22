@@ -22,7 +22,7 @@
         @endphp
 
         @foreach ($filters as $key => $label)
-            <a href="{{ route('books.index', [...request()->query(), 'filter' => $key]) }}"
+            <a href="{{ route('books.index', [...request()->query(),'page' => 1, 'filter' => $key]) }}"
                 class="{{ request('filter') === $key || (request('filter') === null && $key === '') ? 'filter-item-active' : 'filter-item' }}">
                 {{ $label }} </a>
         @endforeach
@@ -57,4 +57,11 @@
             </li>
         @endforelse
     </ul>
+
+    @if ($books->count())
+        <nav class="mt-4">
+            {{ $books->appends(request()->query())->links() }}
+        </nav>
+    @endif
+
 @endsection

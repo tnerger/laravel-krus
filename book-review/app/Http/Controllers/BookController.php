@@ -29,10 +29,12 @@ class BookController extends Controller
         // $books = $books->get();
 
         $books =
-            // Cache::remember('books' . md5($title) . $filter, 3600, fn() =>
-            $books->get()
-        // )
-        ;
+            Cache::remember(
+                'books' . md5(http_build_query(request()->query())),
+                3600,
+                fn() =>
+                $books->paginate(10)
+            );
 
         return view('books.index', ['books' => $books]);
     }
@@ -58,21 +60,23 @@ class BookController extends Controller
      */
     public function show(int $id)
     {
-        $cacheKey = 'book2:' . $id;
+        $cacheKey = 'book2:' . $id . ':' . md5(http_build_query(request()->except('page')));
 
-        $book = cache()
-            ->remember(
-                $cacheKey,
-                3600,
-                fn() =>
-                Book::with(
-                    [
-                        'reviews' => fn($query) => $query->popular()->latest()
-                    ]
-                )->withAvgRating()->withReviewsCount()->findOrFail($id)
-            );
+        // Caching nur fürs Buch, nicht für paginierte Daten
+        $book = cache()->remember(
+            $cacheKey,
+            3600,
+            fn() => Book::withAvgRating()->withReviewsCount()->findOrFail($id)
+        );
 
-        return view('books.show', ['book' => $book]);
+        // Reviews separat, da sie request()->page abhängig sind
+        $reviews = $book->reviews()
+            ->popular()
+            ->latest()
+            ->paginate(10)
+            ->appends(request()->query());
+
+        return view('books.show', compact('book', 'reviews'));
     }
 
     /**
