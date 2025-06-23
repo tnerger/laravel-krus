@@ -60,7 +60,7 @@ class BookController extends Controller
      */
     public function show(int $id)
     {
-        $cacheKey = 'book2:' . $id . ':' . md5(http_build_query(request()->except('page')));
+        $cacheKey = 'book2:' . $id;
 
         // Caching nur fürs Buch, nicht für paginierte Daten
         $book = cache()->remember(

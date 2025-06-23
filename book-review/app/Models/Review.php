@@ -28,5 +28,6 @@ class Review extends Model
     protected static function booted() {
         static::updated(fn(Review $review) => cache()->forget('book2:' . $review->book_id));
         static::deleted(fn(Review $review) => cache()->forget('book2:' . $review->book_id));
+        static::created(fn(Review $review) => cache()->forget('book2:' . $review->book_id));
     }
 }
