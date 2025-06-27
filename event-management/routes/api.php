@@ -16,4 +16,5 @@ Route::apiResource('events', EventController::class);
 // Scoped? Für Route Model Binding, damit das Event auch immer geladen wird.
 // Denn ohne Event gibt es keinen Teilnehmenden
 Route::apiResource('events.attendees', AttendeeController::class)
-    ->scoped(['attendee' => 'event']);
+    ->scoped() // Scoped ohne Parameter, weil das sonst Fehler wirft, denn Laravel erkennt die Relation auch so
+    ->except(['update']); // Update brauchen wir nicht, deshalb fliegt das

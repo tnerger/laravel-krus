@@ -10,6 +10,8 @@ class Attendee extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id']; // User Id soll per Mass-Assignment zu füllen sein
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
