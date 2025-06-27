@@ -4,14 +4,15 @@ namespace App\Http\Traits;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder;
 
 trait CanLoadRelationships
 {
     public function loadRelationships(
-        Model|EloquentBuilder|Builder $for,
+        Model|EloquentBuilder|Builder|HasMany $for,
         ?array $relations = null
-    ): Model|EloquentBuilder|Builder {
+    ): Model|EloquentBuilder|Builder|HasMany {
 
         $relations = $relations // entweder die Relationen aus dem Array des Konstruktors
             ?? $this->relations // Oder die Relationen direkt aus dem Objekt, muss dann aber mit private $relations im z.B. Controller geladen werden

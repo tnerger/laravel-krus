@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AttendeeResource;
+use App\Http\Traits\CanLoadRelationships;
 use App\Models\Attendee;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
 class AttendeeController extends Controller
 {
+
+    use CanLoadRelationships;
+    private $relations = ['user'];
     /**
      * Display a listing of the resource.
      */
-    public function index(Event $event)
+    public function index(string $id)
     {
-        $attendees = $event->attendees()->latest();
+        $attendees = $this->loadRelationships(Attendee::query()->where('event_id', $id));
 
         return AttendeeResource::collection(
             $attendees->paginate() // das mit der Pginierung funktioniert auch in der API
@@ -33,7 +37,7 @@ class AttendeeController extends Controller
             'user_id' => 1
         ]);
 
-        return new AttendeeResource($attendee);
+        return new AttendeeResource($this->loadRelationships($attendee));
     }
 
     /**
@@ -41,7 +45,7 @@ class AttendeeController extends Controller
      */
     public function show(Event $event, Attendee $attendee)
     {
-        return new AttendeeResource($attendee);
+        return new AttendeeResource($this->loadRelationships($attendee));
     }
 
     /**
@@ -57,7 +61,7 @@ class AttendeeController extends Controller
      */
     // Event ist hier ein Strinf, weil wir das nicht brauchen um den Attendee
     // zu löschen, so sparen wir uns den Zugriff auf die DB
-        public function destroy(string $event, Attendee $attendee)
+    public function destroy(string $event, Attendee $attendee)
     {
         $attendee->delete();
 
