@@ -31,3 +31,4 @@ Route::apiResource('events.attendees', AttendeeController::class)
     ->only(['index', 'show']); // Public Attendee Routes
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
