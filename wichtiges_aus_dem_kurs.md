@@ -19,3 +19,4 @@ php artisan make:controller BookController --resource : Book Resource Controller
 php artisan make:provider AuthServiceProvider : AuthServiceProvider erstellen, für Policies und Gates
 php artisan install:api // api files installieren
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider" // Installiert / Migriert das Sanctum für User Auth
+php artisan make:policy AttendeePolicy --model=Attendee  // Erstellt eine Policy für das Model Attendee. Policy ist eine Art von Gate, die für ein Model gilt.

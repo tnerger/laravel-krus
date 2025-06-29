@@ -20,7 +20,7 @@ class AttendeeController extends Controller
      */
     public function index(string $id)
     {
-        // Gate::authorize('viewAny', Attendee::class);
+        Gate::authorize('viewAny', Attendee::class);
         $attendees = $this->loadRelationships(Attendee::query()->where('event_id', $id));
 
         return AttendeeResource::collection(
@@ -33,7 +33,7 @@ class AttendeeController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        // Gate::authorize('create', Attendee::class);
+        Gate::authorize('create', Attendee::class);
         // Relationship Model "event->attendees()->create" um den Attendee direkt mit dem Parent "Event"
         // zu verbiden
         $attendee = $event->attendees()->create([
@@ -48,7 +48,7 @@ class AttendeeController extends Controller
      */
     public function show(Event $event, Attendee $attendee)
     {
-        // Gate::authorize('view', Attendee::class);
+        Gate::authorize('view', $attendee);
         return new AttendeeResource($this->loadRelationships($attendee));
     }
 
@@ -67,7 +67,7 @@ class AttendeeController extends Controller
     // zu löschen, so sparen wir uns den Zugriff auf die DB
     public function destroy(Event $event, Attendee $attendee)
     {
-        Gate::authorize('delete-attendee', [$event, $attendee]);
+        Gate::authorize('delete', $attendee);
         $attendee->delete();
 
         return response(status: 204);
