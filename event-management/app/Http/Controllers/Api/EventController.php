@@ -66,7 +66,7 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        // Gate::authorize('update', $event);
+        Gate::authorize('update-event', $event);
         $event->update([
             // sometimes => Bedeutet, dass der Rest der Validierungen danach nur geprüft wird,
             // wenn das Wertepaar auch mit übergeben wird.

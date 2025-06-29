@@ -65,9 +65,9 @@ class AttendeeController extends Controller
      */
     // Event ist hier ein Strinf, weil wir das nicht brauchen um den Attendee
     // zu löschen, so sparen wir uns den Zugriff auf die DB
-    public function destroy(string $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee)
     {
-        // Gate::authorize('delete', Attendee::class);
+        Gate::authorize('delete-attendee', [$event, $attendee]);
         $attendee->delete();
 
         return response(status: 204);

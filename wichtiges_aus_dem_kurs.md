@@ -16,5 +16,6 @@ php artisan serve : Laravel Server starten
 php artisan make:migration create_table_name : Migration erstellen
 php artisan make:request TaskRequest : Request validation erstellen
 php artisan make:controller BookController --resource : Book Resource Controller erstellen
+php artisan make:provider AuthServiceProvider : AuthServiceProvider erstellen, für Policies und Gates
 php artisan install:api // api files installieren
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider" // Installiert / Migriert das Sanctum für User Auth
