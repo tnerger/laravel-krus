@@ -20,3 +20,8 @@ php artisan make:provider AuthServiceProvider : AuthServiceProvider erstellen, f
 php artisan install:api // api files installieren
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider" // Installiert / Migriert das Sanctum für User Auth
 php artisan make:policy AttendeePolicy --model=Attendee  // Erstellt eine Policy für das Model Attendee. Policy ist eine Art von Gate, die für ein Model gilt.
+php artisan queue:work --stop-when-empty // Arbeiter für die Queue starten, der stoppt, wenn keine Jobs mehr in der Queue sind
+php artisan queue:work --tries=3 --timeout=60 // Arbeiter für die Queue starten, der 3 Versuche pro Job macht und 60 Sekunden Timeout hat
+php artisan queue:work --daemon // Arbeiter für die Queue starten, der im Hintergrund läuft und nicht stoppt
+php artisan queue:listen // Arbeiter für die Queue starten, der im Hintergrund läuft und nicht stoppt, aber bei jedem Job neu startet
+php artisan queue:restart // Arbeiter für die Queue neu starten, damit neue Jobs angenommen werden

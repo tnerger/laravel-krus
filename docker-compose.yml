@@ -9,6 +9,12 @@ services:
     ports:
       - "8000:8000"
     command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - db
+      - mailpit
+    environment:
+      MAIL_HOST: mailpit
+      MAIL_PORT: 1025
 
   db:
     image: mariadb
@@ -33,5 +39,10 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: root
       PMA_ARBITRARY: 1
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP-Port
 volumes:
     db_data:
