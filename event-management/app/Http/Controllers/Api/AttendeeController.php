@@ -37,7 +37,7 @@ class AttendeeController extends Controller
         // Relationship Model "event->attendees()->create" um den Attendee direkt mit dem Parent "Event"
         // zu verbiden
         $attendee = $event->attendees()->create([
-            'user_id' => 1
+            'user_id' => $request->user()->id
         ]);
 
         return new AttendeeResource($this->loadRelationships($attendee));
@@ -63,8 +63,6 @@ class AttendeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // Event ist hier ein Strinf, weil wir das nicht brauchen um den Attendee
-    // zu löschen, so sparen wir uns den Zugriff auf die DB
     public function destroy(Event $event, Attendee $attendee)
     {
         Gate::authorize('delete', $attendee);
