@@ -1,6 +1,7 @@
 Wichtige Befehle, die ich Bash gelernt habe:
 
 docker compose exec app bash : Bash in den Container app öffnen
+docker compose exec node npm run dev : Node in den Container app öffnen und dev starten
 
 composer create-project --prefer-dist laravel/laravel book-review : neues Laravel projekt mit dem Namen "book-review"
 

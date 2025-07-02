@@ -5,6 +5,7 @@ services:
       - .:/app
       - /app/storage
       - /app/bootstrap/cache
+      - /app/job-board/node_modules
     working_dir: /app/job-board
     ports:
       - "8000:8000"
@@ -12,6 +13,7 @@ services:
     depends_on:
       - db
       - mailpit
+      - node
     environment:
       MAIL_HOST: mailpit
       MAIL_PORT: 1025
@@ -44,5 +46,14 @@ services:
     ports:
       - "8025:8025"  # Web UI
       - "1025:1025"  # SMTP-Port
+  node:
+    image: node:latest
+    working_dir: /app/job-board
+    ports:
+      - "5173:5173"  # Vite dev server
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: tail -f /dev/null    
 volumes:
     db_data:
