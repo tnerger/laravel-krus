@@ -5,7 +5,7 @@ services:
       - .:/app
       - /app/storage
       - /app/bootstrap/cache
-    working_dir: /app/livewire-poll
+    working_dir: /app/job-board
     ports:
       - "8000:8000"
     command: php artisan serve --host=0.0.0.0 --port=8000
