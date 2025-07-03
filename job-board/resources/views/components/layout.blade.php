@@ -11,14 +11,14 @@
 
     <!-- Styles / Scripts -->
     {{-- @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'))) --}}
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- @else --}}
-        <style></style>
+    <style></style>
     {{-- @endif --}}
 </head>
 
-<body>
-    <div class="text-4xl mt-4 font-bold text-gray-900">This should be a big text</div>
+<body class="mx-auto mt-10 max-w-2xl bg-slate-200 text-salte-700">
+    {{ $slot }}
 </body>
 
 </html>

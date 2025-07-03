@@ -26,3 +26,5 @@ php artisan queue:work --tries=3 --timeout=60 // Arbeiter für die Queue starten
 php artisan queue:work --daemon // Arbeiter für die Queue starten, der im Hintergrund läuft und nicht stoppt
 php artisan queue:listen // Arbeiter für die Queue starten, der im Hintergrund läuft und nicht stoppt, aber bei jedem Job neu startet
 php artisan queue:restart // Arbeiter für die Queue neu starten, damit neue Jobs angenommen werden
+php artisan make:component Layout --view // Erstellt eine Blade-Komponente mit dem Namen Layout und der View-Datei resources/views/components/layout.blade.php Ohne --view wird die Komponente ohne View-Datei erstellt
+
