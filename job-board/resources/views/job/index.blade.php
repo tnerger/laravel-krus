@@ -35,7 +35,7 @@
                     <x-radio-group name="category" :options="App\Models\Job::$category" />
                 </div>
 
-                <button type="submit" class="w-full" aria-label="Filter jobs">Filter</button>
+                <x-button type="submit" class="col-span-2" aria-label="Filter jobs">Filter</x-button>
             </div>
         </form>
     </x-card>
