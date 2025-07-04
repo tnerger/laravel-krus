@@ -5,17 +5,35 @@
             <div class="mb-4 grid grid-cols-2 gap-4">
                 <div>
                     <div class="mb-1 font-semibold">Search</div>
-                    <x-text-input name="search" value="{{request('search')}}" placeholder="Search for any Text" />
+                    <x-text-input name="search" value="{{ request('search') }}" placeholder="Search for any Text" />
                 </div>
                 <div>
                     <div class="mb-1 font-semibold">Salary</div>
                     <div class="flex space-x-2">
-                        <x-text-input name="min_salary" value="{{request('min_salary')}}" placeholder="From" />
-                        <x-text-input name="max_salary" value="{{request('max_salary')}}" placeholder="To" />
+                        <x-text-input name="min_salary" value="{{ request('min_salary') }}" placeholder="From" />
+                        <x-text-input name="max_salary" value="{{ request('max_salary') }}" placeholder="To" />
                     </div>
                 </div>
-                <div>xxx</div>
-                <div>xxx</div>
+                <div>
+                    <div class="mb-1 font-semibold">Experience</div>
+                    {{--
+                    Komische Kurs Option:
+                    :options="array_combine(
+                        array_map('ucfirst', App\Models\Job::$experience),
+                        App\Models\Job::$experience,
+                    )"
+                    I mog aber array_reduce lieber :-)
+                    --}}
+                    <x-radio-group name="experience" :options="array_reduce(
+                        App\Models\Job::$expierience,
+                        function($carry, $item) {$carry[ucfirst($item)] = $item; return $carry;},
+                        []
+                    )" />
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold">Category</div>
+                    <x-radio-group name="category" :options="App\Models\Job::$category" />
+                </div>
 
                 <button type="submit" class="w-full" aria-label="Filter jobs">Filter</button>
             </div>
