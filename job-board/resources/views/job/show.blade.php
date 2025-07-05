@@ -7,7 +7,7 @@
     </x-job-card>
     <x-card class="mb-4">
         <h2 class="mb-4 text-lg font-medium">
-            More Jobs from "{{ $job->employer->company_name }}" for you, Bastard:
+            More Jobs from "{{ $job->employer->company_name }}" for you:
         </h2>
 
         <div class="text-sm text-slate-500">
