@@ -12,6 +12,7 @@ php artisan tinker : tinker ausführen
 php artisan migrate : Migration ausführen
 php artisan make:factory TaskFactory --model=Task : Erstellt eine Factory-Class "Task" ist hier der Object Name
 php artisan db:seed : Seeder ausführen
+php artisan db:wipe : Datenbank leeren
 php artisan migrate:refresh --seed : Datenbank auf initial + seeder ausführen
 php artisan serve : Laravel Server starten
 php artisan make:migration create_table_name : Migration erstellen
