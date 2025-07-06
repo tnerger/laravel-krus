@@ -7,6 +7,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Job extends Model
 {
@@ -20,8 +21,14 @@ class Job extends Model
         'Marketing'
     ];
 
-    public function employer(): BelongsTo {
+    public function employer(): BelongsTo
+    {
         return $this->belongsTo(Employer::class);
+    }
+
+    public function jobApplications(): HasMany
+    {
+        return $this->hasMany(JobApplication::class);
     }
 
     public function scopeFilter(Builder|QueryBuilder $query, array $filters): Builder|QueryBuilder
@@ -43,7 +50,7 @@ class Job extends Model
                             ->where('title', 'like', '%' . $search . '%')
                             ->orWhere('description', 'like', '%' . $search . '%')
                             // Filtern über eine Beziehung immer mit xWhereHas
-                            ->orWhereHas('employer', function($query) use ($search){
+                            ->orWhereHas('employer', function ($query) use ($search) {
                                 $query->where('company_name', 'like', '%' . $search . '%');
                             });
                     });

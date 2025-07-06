@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Employer;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $users->pop()->id
             ]);
         }
-        unset($users);
+
         $employers = Employer::all();
         for ($i = 0; $i < 100; $i++) {
             Job::factory()->create([
@@ -35,9 +36,25 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        foreach ($users as $user) {
+            // Jobs in zufälliger Reihenfolge und davon 0 bis 4.
+            $jobs = Job::inRandomOrder()->take(rand(0, 4))->get();
+            foreach ($jobs as $job) {
+                JobApplication::factory()->create([
+                    'user_id' => $user->id,
+                    'job_id' => $job->id
+                ]);
+            }
+        }
+
+
+
         /*
 
         Alternativer Vorschlag dazu:
+
+        Aber leider, sieht das nur gut aus, macht aber nicht, was es soll.
+        Z.B: ->for(Employer::inRandomOrder()->first()) setzt IMMER den selben User...
 
         // Create 20 employers, each with a related user
         Employer::factory()
@@ -52,6 +69,12 @@ class DatabaseSeeder extends Seeder
         Job::factory()
             ->count(100)
             ->for(Employer::inRandomOrder()->first())
+            ->create();
+
+        JobApplication::factory()
+            ->count(600)
+            ->for(User::inRandomOrder()->first())
+            ->for(Job::inRandomOrder()->first())
             ->create();
         */
     }
