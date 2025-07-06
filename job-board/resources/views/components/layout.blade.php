@@ -27,10 +27,10 @@
         <ul class="flex space-x-2">
             @auth
                 <li>
-                    {{auth()->user()->name ?? 'No Name'}}
+                    {{ auth()->user()->name ?? 'No Name' }}
                 </li>
                 <li>
-                    <form action="{{route('auth.destroy')}}" method="POST">
+                    <form action="{{ route('auth.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button>Logout</button>
@@ -41,6 +41,15 @@
             @endauth
         </ul>
     </nav>
+
+    @if (session('success'))
+        <div role="alert"
+            class="my-8 rounded-md border-l-4 border-green-300 bg-green-100 p-4 text-green-700 opacity-75">
+            <p class="font-bold">Success!</p>
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
+
     {{ $slot }}
 </body>
 
