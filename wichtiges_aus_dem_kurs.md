@@ -28,4 +28,4 @@ php artisan queue:work --daemon // Arbeiter für die Queue starten, der im Hinte
 php artisan queue:listen // Arbeiter für die Queue starten, der im Hintergrund läuft und nicht stoppt, aber bei jedem Job neu startet
 php artisan queue:restart // Arbeiter für die Queue neu starten, damit neue Jobs angenommen werden
 php artisan make:component Layout --view // Erstellt eine Blade-Komponente mit dem Namen Layout und der View-Datei resources/views/components/layout.blade.php Ohne --view wird die Komponente ohne View-Datei erstellt
-
+php artisan make:migration AddCvPathToJobApplicationsTable --table=job_applications // Erstellt eine Migration, die das Feld cv_path zur Tabelle job_applications hinzufügt
