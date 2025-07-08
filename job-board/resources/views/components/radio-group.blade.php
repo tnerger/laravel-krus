@@ -1,8 +1,10 @@
 <div>
-    <label class="mb-1 flex items-center">
-        <input type="radio" name="{{ $name }}" value="" @checked(!request($name))>
-        <span class="ml-2">All</span>
-    </label>
+    @if ($allOption)
+        <label class="mb-1 flex items-center">
+            <input type="radio" name="{{ $name }}" value="" @checked(!request($name))>
+            <span class="ml-2">All</span>
+        </label>
+    @endif
     {{--
     optionsWithLabels ist eine Funktion, die im Model erstellt wurde um dafür zu sorgen, dass wir
     IMMER ein Assoc haben.
@@ -10,8 +12,14 @@
     --}}
     @foreach ($optionsWithLabels as $label => $option)
         <label class="mb-1 flex items-center">
-            <input type="radio" name="{{ $name }}" value="{{ $option }}" @checked($option === request($name))>
+            <input type="radio" name="{{ $name }}" value="{{ $option }}" @checked($option === ($value ?? request($name)))>
             <span class="ml-2">{{ $label }}</span>
         </label>
     @endforeach
+
+    @error($name)
+        <div class="mt-1 text-xs text-red-500">
+            {{ $message }}
+        </div>
+    @enderror
 </div>

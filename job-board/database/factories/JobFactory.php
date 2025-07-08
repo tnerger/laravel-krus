@@ -24,7 +24,7 @@ class JobFactory extends Factory
             'salary' => fake()->numberBetween(5_000,150_000),
             'location' => fake()->city,
             'category' => fake()->randomElement(Job::$category),
-            'expierience' => fake()->randomElement(Job::$expierience),
+            'experience' => fake()->randomElement(Job::$experience),
             'created_at' => fake()->dateTimeBetween('-5 weeks','now') // Nicht im Kurs, ich fands aber schöner so
         ];
     }

@@ -29,6 +29,12 @@ class Employer
         // Employer aus der Route parameter holen
         $employer = $request->route('employer');
 
+        // sollte der Employer nicht als ID sondern, als Klasse kommen, dann
+        // nur die ID herausfiltern und weiter...
+        if(is_object($employer)){
+            $employer = $employer->id;
+        }
+
         if ($request->user()->employer->id != $employer) {
             return redirect()->route('employer.job.index', $request->user()->employer)
                 ->with('success', 'You have been successfully redirected to YOUR index ;-) ');

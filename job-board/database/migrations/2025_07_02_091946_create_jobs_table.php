@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('salary');
             $table->string('location');
             $table->string('category');
-            $table->enum('expierience', Job::$expierience);
+            $table->enum('experience', Job::$experience);
             $table->timestamps();
         });
     }

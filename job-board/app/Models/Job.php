@@ -14,13 +14,15 @@ class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
-    public static array $expierience = ['entry', 'intermediate', 'senior'];
+    public $fillable = ['title', 'location', 'salary', 'description', 'experience', 'category'];
+    public static array $experience = ['entry', 'intermediate', 'senior'];
     public static array $category = [
         'IT',
         'Finance',
         'Sales',
         'Marketing'
     ];
+
 
     public function employer(): BelongsTo
     {
@@ -72,8 +74,8 @@ class Job extends Model
             ->when($filters['max_salary'] ?? null, function ($query, $max_salary) {
                 $query->where('salary', '<=', $max_salary);
             })
-            ->when($filters['expierience'] ?? null, function ($query, $expierience) {
-                $query->where('expierience', $expierience);
+            ->when($filters['experience'] ?? null, function ($query, $experience) {
+                $query->where('experience', $experience);
             })
             ->when($filters['category'] ?? null, function ($query, $category) {
                 $query->where('category', $category);

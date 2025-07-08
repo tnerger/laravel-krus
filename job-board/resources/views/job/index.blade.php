@@ -25,7 +25,7 @@
                     I mog aber array_reduce lieber :-)
                     --}}
                     <x-radio-group name="experience" :options="array_reduce(
-                        App\Models\Job::$expierience,
+                        App\Models\Job::$experience,
                         function($carry, $item) {$carry[ucfirst($item)] = $item; return $carry;},
                         []
                     )" />
