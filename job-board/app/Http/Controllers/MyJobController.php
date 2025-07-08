@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JobRequest;
 use App\Models\Employer;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -11,9 +12,13 @@ class MyJobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Employer $employer)
     {
-        return view('employer.job.index');
+
+        return view('employer.job.index', [
+            'employer' => $employer,
+            'jobs' => $employer->jobs()->with(['employer', 'jobApplications.user'])->get()
+        ]);
     }
 
     /**
@@ -27,18 +32,11 @@ class MyJobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Employer $employer)
+    public function store(JobRequest $request, Employer $employer)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'salary' => 'required|numeric|min:50000',
-            'description' => 'required|string',
-            'experience' => 'required|in:' . implode(',', Job::$experience),
-            'category' => 'required|in:' . implode(',', Job::$category)
-        ]);
 
-        $employer->jobs()->create($validatedData);
+
+        $employer->jobs()->create($request->validated());
 
         return redirect()->route('employer.job.index', $employer)
             ->with('success', 'Job created!');
@@ -55,17 +53,21 @@ class MyJobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Employer $employer, Job $job)
     {
-        //
+        return view('employer.job.edit', ['employer' => $employer, 'job' => $job]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(JobRequest $request,Employer $employer, Job $job)
     {
-        //
+
+        $job->update($request->validated());
+
+        return redirect()->route('employer.job.index', $employer)
+            ->with('success', 'Job updated!');
     }
 
     /**

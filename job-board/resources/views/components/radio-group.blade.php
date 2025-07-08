@@ -10,6 +10,7 @@
     IMMER ein Assoc haben.
     Um, je nach Bedarf für jede Option es anderes Label zu haben.
     --}}
+
     @foreach ($optionsWithLabels as $label => $option)
         <label class="mb-1 flex items-center">
             <input type="radio" name="{{ $name }}" value="{{ $option }}" @checked($option === ($value ?? request($name)))>
