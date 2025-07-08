@@ -16,7 +16,7 @@ class MyJobApplicationController extends Controller
             'applications' => auth()
             ->user()
             ->jobApplications() // Wegen Relation, die im User-Modell beschrieben ist
-            ->with(['job' => fn($query) => $query->withCount('jobApplications')->withAvg('jobApplications', 'expected_salary'),'job.employer']) // Direkt den Job für Infos mitladen
+            ->with(['job' => fn($query) => $query->withCount('jobApplications')->withAvg('jobApplications', 'expected_salary')->withTrashed(),'job.employer']) // Direkt den Job für Infos mitladen
             ->latest()->get() // Und alles abholen :-)
         ]);
     }
